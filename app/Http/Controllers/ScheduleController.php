@@ -31,7 +31,7 @@ class ScheduleController extends Controller
 
         // $startdatex = $date->endOfMonth();
         // $enddatex = $date->endOfMonth();
-        dd($userRoleId);
+        // dd($userRoleId);
         if ($userRoleId === 1 || $userRoleId === 2) {
             // $schedules = Schedule::all();
             // $schedules = DB::table('schedules')->get();
@@ -44,6 +44,7 @@ class ScheduleController extends Controller
             $totalFee = $schedules->sum('total_fee');
             $totalCost = $schedules->sum('total_cost');
             $totalProfit = $schedules->sum('profit');
+            dump($schedules);
         }elseif($userRoleId === 4) {
             $schedules = Schedule::where('afler_id', $userAflerId)->where('fee_status', null)->get();
             $isAdmin = false;
@@ -61,7 +62,7 @@ class ScheduleController extends Controller
             $totalFee = null;
             $totalProfit = null;
         }
-        // dd($totalCost);
+        dd($totalCost);
 
         $joinSG = Schedule::join('grades', 'schedules.grade_id', '=', 'grades.id')->get();
         
