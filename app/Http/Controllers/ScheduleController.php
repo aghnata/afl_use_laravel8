@@ -32,7 +32,7 @@ class ScheduleController extends Controller
         // $startdatex = $date->endOfMonth();
         // $enddatex = $date->endOfMonth();
         // dd($userRoleId);
-        if ($userRoleId === 1 || $userRoleId === 2) {
+        if ($userRoleId == 1 || $userRoleId == 2) {
             // $schedules = Schedule::all();
             // $schedules = DB::table('schedules')->get();
             $dateStart = new Carbon('first day of this month');
@@ -44,8 +44,7 @@ class ScheduleController extends Controller
             $totalFee = $schedules->sum('total_fee');
             $totalCost = $schedules->sum('total_cost');
             $totalProfit = $schedules->sum('profit');
-            dump($schedules);
-        }elseif($userRoleId === 4) {
+        }elseif($userRoleId == 4) {
             $schedules = Schedule::where('afler_id', $userAflerId)->where('fee_status', null)->get();
             $isAdmin = false;
             $isAfler = true;
@@ -53,7 +52,7 @@ class ScheduleController extends Controller
             $totalFee = $schedules->sum('total_fee');
             $totalCost = null;
             $totalProfit = null;
-        }elseif($userRoleId === 5){
+        }elseif($userRoleId == 5){
             $schedules = Schedule::where('aflee_id', $userAfleeId)->where('cost_status', null)->get();
             $isAdmin = false;
             $isAfler = false;
@@ -62,8 +61,7 @@ class ScheduleController extends Controller
             $totalFee = null;
             $totalProfit = null;
         }
-        dd($totalCost);
-
+        
         $joinSG = Schedule::join('grades', 'schedules.grade_id', '=', 'grades.id')->get();
         
         $aflers = Afler::all();
@@ -104,7 +102,7 @@ class ScheduleController extends Controller
             $sortedAflerName = null;
         }
                
-        if ($userRoleId === 1 || $userRoleId === 2) {
+        if ($userRoleId == 1 || $userRoleId == 2) {
             // pengurutan berdasarkan nama Afler tanpa filter tanggal
             if ($aflerIdSort != null && $startDate == null && $endDate == null && $afleeIdSort == null) {
                 $schedules = Schedule::where('afler_id', $aflerIdSort)->get();
@@ -135,7 +133,7 @@ class ScheduleController extends Controller
             $totalCost = $schedules->sum('total_cost');
             $totalProfit = $schedules->sum('profit');
 
-        }elseif($userRoleId === 4) {
+        }elseif($userRoleId == 4) {
             if ($startDate == null && $endDate == null) {
                 $schedules = Schedule::where('afler_id', $userAflerId)->get();        
             } else {
@@ -145,7 +143,7 @@ class ScheduleController extends Controller
             $isAfler = true;
             $isAflee = false;
             $totalFee = $schedules->sum('total_fee');
-        }elseif($userRoleId === 5){
+        }elseif($userRoleId == 5){
             if ($startDate == null && $endDate == null) {
                 $schedules = Schedule::where('aflee_id', $userAfleeId)->get();
             } else {
@@ -196,7 +194,7 @@ class ScheduleController extends Controller
         $endDate = $request->end_date;
         $paymentType = $request->payment_type;
 
-        if ($userRoleId === 1) {
+        if ($userRoleId == 1) {
             // pengurutan berdasarkan nama Afler tanpa filter tanggal
             if ($aflerIdSort != null && $startDate == null && $endDate == null && $afleeIdSort == null) {
                 $schedules = Schedule::where('afler_id', $aflerIdSort)->get();
