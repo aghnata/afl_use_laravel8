@@ -31,6 +31,7 @@ class ScheduleController extends Controller
 
         // $startdatex = $date->endOfMonth();
         // $enddatex = $date->endOfMonth();
+        dd($userRoleId);
         if ($userRoleId === 1 || $userRoleId === 2) {
             // $schedules = Schedule::all();
             // $schedules = DB::table('schedules')->get();
