@@ -73,7 +73,7 @@
                     <li>TPB: 115.000/sesi</li>
                 </ol>
                 <p>Untuk reguler, jika les bareng teman maka + 10.000*jumlah teman.</p>
-                <p>1 sesi = 90 menit, jika lebih bisa dihitung 2 sesi kecuali pengajar berkenan tetap dihitung 1 sesi.</p>
+                <p>1 sesi = 90 menit, jika lebih terhitung 2 sesi kecuali pengajar berkenan tetap dihitung 1 sesi.</p>
             </div>
         @endif
         @if ($isAflee || $isAdmin)
@@ -86,7 +86,7 @@
                     <li>TPB: 130.000/sesi</li>
                 </ol>
                 <p>Untuk reguler, jika les bareng teman maka + 20.000*jumlah teman.</p>
-                <p>1 sesi = 90 menit, jika lebih bisa dihitung 2 sesi kecuali pengajar berkenan tetap dihitung 1 sesi.</p>
+                <p>1 sesi = 90 menit, jika lebih terhitung 2 sesi kecuali pengajar berkenan tetap dihitung 1 sesi.</p>
             </div>
         @endif
 
