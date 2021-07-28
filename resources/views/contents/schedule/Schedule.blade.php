@@ -78,7 +78,7 @@
         @endif
         @if ($isAflee || $isAdmin)
             <div class="alert alert-warning">
-                <p>Fee AFLer(Pengajar) terhitung tanggal 4 Juli 2021 </p>
+                <p>Biaya pendidikan siswa (AFLee) terhitung tanggal 4 Juli 2021</p>
                 <ol>
                     <li>SD Reguler: 80.000 /sesi</li>
                     <li>SMP Reguler: 90.000/sesi || SMP Olim: 115.000/sesi</li>
