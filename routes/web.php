@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\UpdateController;
 
 
 /*
@@ -25,6 +26,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/Schedule/ChangePaymentStatus', [ScheduleController::class, 'changePaymentStatus']);
     Route::post('/Schedule/Store', [ScheduleController::class, 'store']);
     Route::post('/Schedule/Delete', [ScheduleController::class, 'delete']);
+    
+    //update transport fee
+    Route::get('/Update/TransportFee', [UpdateController::class, 'updateTransportFee']);
 });
 
 // Route::get('/dashboard', function () {
