@@ -29,21 +29,24 @@ class Schedule extends Model
     }
 
     public function checkInput($input){
-        $AllAflers = Afler::all();
-        $checkGuru = 0;
-        foreach ($AllAflers as $afler){
-            if ($afler->id = $input) {
-                $checkGuru++;
-            }
-        }
+        // $AllAflers = Afler::all();
+        // $checkGuru = 0;
+        // foreach ($AllAflers as $afler){
+        //     if ($afler->id = $input) {
+        //         $checkGuru++;
+        //     }
+        // }
 
-        $AllAflees = Aflee::all();
-        $checkSiswa = 0;
-        foreach ($AllAflees as $aflee){
-            if ($aflee->id = $input) {
-                $checkSiswa++;
-            }
-        }
+        // $AllAflees = Aflee::all();
+        // $checkSiswa = 0;
+        // foreach ($AllAflees as $aflee){
+        //     if ($aflee->id = $input) {
+        //         $checkSiswa++;
+        //     }
+        // }
+        
+        $checkGuru = Afler::find($input) ? 1 : 0;
+        $checkSiswa = Aflee::find($input) ? 1 : 0;
 
         $check= [
                 "checkGuru" => $checkGuru,
