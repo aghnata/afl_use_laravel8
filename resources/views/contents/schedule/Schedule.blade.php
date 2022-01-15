@@ -220,6 +220,9 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <tr class="excludeThisClass excludeThisClassForAflee excludeThisClassForAfler ">
                             <td></td>
+                            @if ($isAdmin)
+                                <td></td>
+                            @endif
                             <td><input type="date" name="date" required/></td>
                         @if ($isAdmin == true || $isAflee == true)
                             <td>
