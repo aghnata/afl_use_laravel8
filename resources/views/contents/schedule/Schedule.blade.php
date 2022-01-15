@@ -104,6 +104,9 @@
             {{-- {{dd($isAdmin)}} --}}
             <thead>
                 <th>No</th>
+                @if ($isAdmin)
+                    <th class="excludeThisClassForAflee excludeThisClassForAfler">Keterangan</th>
+                @endif
                 <th>Tanggal</th>
                 <th>Afler</th>
                 <th>Aflee</th>
@@ -133,16 +136,30 @@
                 @if ($isAdmin == true )    
                     <th class="excludeThisClassForAflee excludeThisClassForAfler">Profit</th>
                 @endif
-                    @if ($isAdmin == true || $isAfler == true)
-                        <th class="excludeThisClassForAflee excludeThisClassForAfler" colspan="2"><center>Action</center></th>
-                    @endif
-                    <th class="excludeThisClassForAflee excludeThisClassForAfler">Keterangan</th>
+                @if ($isAdmin == true || $isAfler == true)
+                    <th class="excludeThisClassForAflee excludeThisClassForAfler" colspan="2"><center>Action</center></th>
+                @endif
+                
             </thead>
             <tbody>
                 @php( $no = 1 )
                 @foreach ($schedules as $schedule)
                 <tr>
                     <td> {{ $no++ }} </td>
+                    @if ($isAdmin == true)
+                        @if ($schedule->fee_status == 'payed_by_AFL' && $schedule->cost_status == null)
+                            <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:green">Fee sudah ditransfer</td>
+                        @endif
+                        @if ($schedule->cost_status == 'transfered_by_Aflee' && $schedule->fee_status == null)
+                            <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:mediumturquoise">Cost sudah lunas</td>
+                        @endif
+                        @if ($schedule->fee_status == 'payed_by_AFL' && $schedule->cost_status == 'transfered_by_Aflee')
+                            <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:brown">Fee transfered & Cost lunas</td>
+                        @endif
+                        @if ($schedule->fee_status == null && $schedule->cost_status == null)
+                            <td class="excludeThisClassForAflee excludeThisClassForAfler"></td>
+                        @endif
+                    @endif
                     <td>  {{ $schedule->date }} </td>
                     <td> {{ isset($schedule->afler->afler_name) ? $schedule->afler->afler_name : '' }} </td>
                     <td> {{ isset($schedule->aflee->aflee_name) ? $schedule->aflee->aflee_name : '' }} </td>
@@ -172,29 +189,16 @@
                     @if ($isAdmin == true )    
                         <td class="excludeThisClassForAflee excludeThisClassForAfler"> {{ number_format($schedule->profit) }} </td>
                     @endif
-                        @if ($isAdmin == true || $isAfler == true)                            
-                            <td class="excludeThisClassForAflee excludeThisClassForAfler">edit</td>
-                            <form action="{{url('/Schedule/Delete')}}" method="post">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="idSchedule" value="{{ $schedule->id }}">
-                                <td class="excludeThisClassForAflee excludeThisClassForAfler"> <button {{ $schedule->fee_status == 'payed_by_AFL' || $schedule->cost_status == 'transfered_by_Aflee' ? "disabled" : "" }} type="submit" onclick="return confirm(&quot;Are you sure delete this task?&quot;)">delete</button> </td>
-                            </form>
-                        @endif
-                        @if ($isAdmin == true)
-                            @if ($schedule->fee_status == 'payed_by_AFL' && $schedule->cost_status == null)
-                                <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:green">Fee sudah ditransfer</td>
-                            @endif
-                            @if ($schedule->cost_status == 'transfered_by_Aflee' && $schedule->fee_status == null)
-                                <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:mediumturquoise">Cost sudah lunas</td>
-                            @endif
-                            @if ($schedule->fee_status == 'payed_by_AFL' && $schedule->cost_status == 'transfered_by_Aflee')
-                                <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:brown">Fee transfered & Cost lunas</td>
-                            @endif
-                            @if ($schedule->fee_status == null && $schedule->cost_status == null)
-                                <td class="excludeThisClassForAflee excludeThisClassForAfler"></td>
-                            @endif
-                        @endif
-                        @if ($isAfler == true && $isAdmin == false)
+                    @if ($isAdmin == true || $isAfler == true)                            
+                        <td class="excludeThisClassForAflee excludeThisClassForAfler">edit</td>
+                        <form action="{{url('/Schedule/Delete')}}" method="post">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="idSchedule" value="{{ $schedule->id }}">
+                            <td class="excludeThisClassForAflee excludeThisClassForAfler"> <button {{ $schedule->fee_status == 'payed_by_AFL' || $schedule->cost_status == 'transfered_by_Aflee' ? "disabled" : "" }} type="submit" onclick="return confirm(&quot;Are you sure delete this task?&quot;)">delete</button> </td>
+                        </form>
+                    @endif
+                        
+                        {{-- @if ($isAfler == true && $isAdmin == false)
                             @if ($schedule->fee_status == 'payed_by_AFL')
                                 <td class="excludeThisClassForAfler" style="background-color:green">Fee sudah ditransfer</td>
                             @else
@@ -207,7 +211,7 @@
                             @else
                                 <td class="excludeThisClassForAflee"></td>
                             @endif
-                        @endif
+                        @endif --}}
                 </tr>    
                 @endforeach
 
