@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/Schedule/Store', [ScheduleController::class, 'store']);
     Route::post('/Schedule/Delete', [ScheduleController::class, 'delete']);
     
+    Route::get('/Schedule/download_pdf', [ScheduleController::class, 'downloadPDF']);
+    
     //update transport fee
     Route::get('/Update/TransportFee', [UpdateController::class, 'updateTransportFee']);
 });

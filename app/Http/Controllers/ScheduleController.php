@@ -11,6 +11,9 @@ use App\Models\Grade;
 use App\Models\TransportFee;
 use Carbon\Carbon;
 use DB;
+use PDF;
+use Storage;
+use Illuminate\Http\Response;
 
 class ScheduleController extends Controller
 {
@@ -285,5 +288,27 @@ class ScheduleController extends Controller
         $schedule = Schedule::find($idSchedule);
         $schedule->delete();
         return redirect ('Schedule/All'); 
+    }
+
+    public function downloadPDF(){
+        $pegawai = null;
+ 
+        $pdf = PDF::loadview('pegawai_pdf',['pegawai'=>$pegawai]);
+        // dd($pdf->download()->getOriginalContent());
+
+        $destinationPathImg = public_path() . '\uploads';
+        $content = $pdf->output();
+        // dd($pdf->output());
+        // file_put_contents($destinationPathImg, $content);
+        Storage::put('public/invoices/tagihan.pdf', $pdf->output());
+        // dd('berhasil?');
+        // return $pdf->download('laporan-pegawai.pdf');
+
+        $file = Storage::disk('public')->get('invoices/tagihan.pdf');
+        // dd($file);
+  
+        return (new Response($file, 200))
+              ->header('Content-Type', 'application/pdf');
+
     }
 }
