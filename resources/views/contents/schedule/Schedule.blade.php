@@ -37,12 +37,13 @@
             </datalist>
             <input type="hidden" name="aflee_id" value="{{$afleeIdSort}}" class="filtersiswa"/>
             <br>
-            tgl awal<input type="date" name="start_date" value="{{$startDate}}">
-            tgl akhir<input type="date" name="end_date" value="{{$endDate}}">
+            tgl awal<input id="start_date" type="date" name="start_date" value="{{$startDate}}">
+            tgl akhir<input id="end_date" type="date" name="end_date" value="{{$endDate}}">
             <br>
             <input id="payment_status_aflee" type="hidden" name="payment_status" value="">
             <button type="button" style="margin-right: 210px;" onclick="changePaymentValueFalseAflee()"> search </button>
             <button type="button" class="btn btn-primary" onclick="changePaymentValueAflee()"> Cost sudah dibayar Aflee </button>
+            <button type="button" class="btn btn-warning ml-5" onclick="sendInvoiceAflee()"> Tagih Aflee </button>
             <button type="submit" id="submit-filter-aflee" hidden ></button>
         </form>
         <br>
@@ -309,7 +310,7 @@
                 @endif
             @if ($isAdmin == true )    
                 <tr>
-                    <td colspan="13" style="text-align:center; background-color:aqua; font-weight: bold;"> TOTAL </td>
+                    <td colspan="14" style="text-align:center; background-color:aqua; font-weight: bold;"> TOTAL </td>
                     <td style="text-align:center; background-color:red; font-weight: bold;" class="excludeThisClassForAflee"> {{ number_format($totalFee) }} </td>
                     <td style="text-align:center; background-color:gold; font-weight: bold;" class="excludeThisClassForAfler"> {{ number_format($totalCost) }} </td>
                     <td style="text-align:center; background-color:lawngreen; font-weight: bold;" class="excludeThisClassForAflee excludeThisClassForAfler"> {{ number_format($totalProfit) }} </td>

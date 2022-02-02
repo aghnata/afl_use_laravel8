@@ -119,3 +119,21 @@ function changePaymentValueAflee() {
         }
     })
 }
+
+
+// for send invoice to aflee
+function sendInvoiceAflee() {
+    $("#payment_status_aflee").val("send_invoice");
+    var cekStartDate = $("#start_date").val();
+    var cekEndDate = $("#end_date").val();
+    if (cekStartDate && cekEndDate) {
+        if (cekStartDate > cekEndDate) {
+            alert("Tanggal awal tidak boleh lebih besar dari tanggal akhir");
+        } else {
+            $("#submit-filter-aflee").click();
+        }
+    } else {
+        alert("Tanggal awal dan tanggal akhir harus diisi");
+    }
+}
+    

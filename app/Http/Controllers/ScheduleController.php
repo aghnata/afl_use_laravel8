@@ -81,7 +81,7 @@ class ScheduleController extends Controller
     public function sortingSchedule(Request $request){
         //dd($request->start_date, $request->end_date);
         //get current user who login
-         //dd($request->payment_status);
+        // dd($request->all());
         $user = auth()->user();
         $userRoleId = $user->role_id;
         $userAflerId = $user->afler_id;
@@ -117,6 +117,31 @@ class ScheduleController extends Controller
             // pengurutan berdasarkan aflee dan filter tanggal
             } elseif ($afleeIdSort != null && $startDate != null && $endDate != null && $aflerIdSort == null) {
                 $schedules = Schedule::where('aflee_id', $afleeIdSort)->orderBy('date', 'asc')->whereBetween('date', [$startDate, $endDate])->get();
+
+                // dd($request->all());
+                if ($request->payment_status == "send_invoice") {
+                   
+                    $finalStartDate = Carbon::parse($startDate)->format('d F Y');
+                    $finalEndDate = Carbon::parse($endDate)->format('d F Y');
+                    $totalCost = $schedules->sum('total_cost');
+                    // $imgscr = url('/') . "/dist/img/large_logo.png";
+                    $pdf = PDF::loadview('pdf.invoice', 
+                    compact('schedules', 'sortedAfleeName', 'finalStartDate', 'finalEndDate', 'totalCost'))->setPaper('a4', 'landscape');
+                    
+                    $fileName = $startDate."to".$endDate."_".$sortedAfleeName.".pdf";
+                    
+                    try {
+                        Storage::put('public/invoices/'.$fileName, $pdf->output());
+                    } catch (\Throwable $th) {
+                        dd("file sudah ada");
+                    }
+
+                    dd("cek");
+                    // foreach ($schedules as $item) {
+                    //     dump($item);
+                    // }
+                    // dd('beres');
+                }
             
             // pengurutan berdasarkan afler dan filter tanggal
             }elseif ($aflerIdSort != null && $startDate != null && $endDate != null && $afleeIdSort == null) {
@@ -290,25 +315,28 @@ class ScheduleController extends Controller
         return redirect ('Schedule/All'); 
     }
 
-    public function downloadPDF(){
+    public function downloadPDF(Request $request){
         $pegawai = null;
  
         $pdf = PDF::loadview('pegawai_pdf',['pegawai'=>$pegawai]);
-        // dd($pdf->download()->getOriginalContent());
-
-        $destinationPathImg = public_path() . '\uploads';
-        $content = $pdf->output();
-        // dd($pdf->output());
-        // file_put_contents($destinationPathImg, $content);
-        Storage::put('public/invoices/tagihan.pdf', $pdf->output());
-        // dd('berhasil?');
-        // return $pdf->download('laporan-pegawai.pdf');
-
-        $file = Storage::disk('public')->get('invoices/tagihan.pdf');
-        // dd($file);
-  
-        return (new Response($file, 200))
+        
+        $fileName = "tagihan4".".pdf";
+        
+        try {
+            $file = Storage::disk('public')->get('invoices/'.$fileName);
+            
+            return (new Response($file, 200))
               ->header('Content-Type', 'application/pdf');
 
+        } catch (\Throwable $th) {
+
+            Storage::put('public/invoices/'.$fileName, $pdf->output());
+  
+            $file = Storage::disk('public')->get('invoices/'.$fileName);
+  
+            return (new Response($file, 200))
+              ->header('Content-Type', 'application/pdf');
+        }
+  
     }
 }
