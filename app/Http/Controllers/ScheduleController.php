@@ -137,10 +137,7 @@ class ScheduleController extends Controller
                     }
 
                     dd("cek");
-                    // foreach ($schedules as $item) {
-                    //     dump($item);
-                    // }
-                    // dd('beres');
+                    
                 }
             
             // pengurutan berdasarkan afler dan filter tanggal
@@ -315,12 +312,7 @@ class ScheduleController extends Controller
         return redirect ('Schedule/All'); 
     }
 
-    public function downloadPDF(Request $request){
-        $pegawai = null;
- 
-        $pdf = PDF::loadview('pegawai_pdf',['pegawai'=>$pegawai]);
-        
-        $fileName = "tagihan4".".pdf";
+    public function downloadPDF($fileName){
         
         try {
             $file = Storage::disk('public')->get('invoices/'.$fileName);
@@ -329,13 +321,7 @@ class ScheduleController extends Controller
               ->header('Content-Type', 'application/pdf');
 
         } catch (\Throwable $th) {
-
-            Storage::put('public/invoices/'.$fileName, $pdf->output());
-  
-            $file = Storage::disk('public')->get('invoices/'.$fileName);
-  
-            return (new Response($file, 200))
-              ->header('Content-Type', 'application/pdf');
+            dd('File not found');
         }
   
     }
