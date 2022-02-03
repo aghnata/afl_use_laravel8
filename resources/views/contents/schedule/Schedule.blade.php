@@ -3,7 +3,7 @@
 @section('content')
     <a href="{{url('/listaflee')}}">Cek Siswa (Aflee) yg sudah daftar</a>
     
-    @if ($isAdmin == true)
+    @if ($isAdmin)
         {{-- Form filter by Afler --}}
         <form autocomplete="off" action="{{url('/Schedule/SortingSchedule')}}" method="POST">
             {{ csrf_field() }}
@@ -114,30 +114,30 @@
                 <th>Kelas</th>
                 <th>Lokasi</th>
                 <th style="width:50px;">Jumlah Siswa</th>
-                @if ($isAdmin == true || $isAfler == true)
+                @if ($isAdmin || $isAfler)
                     <th class="excludeThisClassForAflee">Fee/sesi</th>
                 @endif
-                @if ($isAdmin == true || $isAflee == true)
+                @if ($isAdmin || $isAflee)
                     <th class="excludeThisClassForAfler" >Cost/sesi</th>
                 @endif
                     <th style="width:50px;">Jumlah Sesi</th>
-                @if ($isAdmin == true || $isAfler == true)
+                @if ($isAdmin || $isAfler)
                     <th class="excludeThisClassForAflee">Fee Total</th>
                 @endif
-                @if ($isAdmin == true || $isAflee == true)
+                @if ($isAdmin || $isAflee)
                     <th class="excludeThisClassForAfler">Cost Total</th>
                 @endif
                     <th>Ongkos</th>
-                @if ($isAdmin == true || $isAfler == true)
+                @if ($isAdmin || $isAfler)
                     <th class="excludeThisClassForAflee">Total Fee</th>
                 @endif
-                @if ($isAdmin == true || $isAflee == true)
+                @if ($isAdmin || $isAflee)
                     <th class="excludeThisClassForAfler">Total Cost</th>
                 @endif
-                @if ($isAdmin == true )    
+                @if ($isAdmin )    
                     <th class="excludeThisClassForAflee excludeThisClassForAfler">Profit</th>
                 @endif
-                @if ($isAdmin == true || $isAfler == true)
+                @if ($isAdmin || $isAfler)
                     <th class="excludeThisClassForAflee excludeThisClassForAfler" colspan="2"><center>Action</center></th>
                 @endif
                 
@@ -147,7 +147,7 @@
                 @foreach ($schedules as $schedule)
                 <tr>
                     <td> {{ $no++ }} </td>
-                    @if ($isAdmin == true)
+                    @if ($isAdmin)
                         @if ($schedule->fee_status == 'payed_by_AFL' && $schedule->cost_status != 'transfered_by_Aflee')
                             <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:green">Fee sudah ditransfer</td>
                         @elseif ($schedule->cost_status == 'transfered_by_Aflee' && $schedule->fee_status != 'payed_by_AFL')
@@ -172,30 +172,30 @@
                     <td> {{ isset($schedule->grade->level) ? $schedule->grade->level : '' }} </td>
                     <td> {{ isset($schedule->location()->place_name) ? $schedule->location()->place_name : '' }} </td>
                     <td> {{ $schedule->sum_student }} </td>
-                    @if ($isAdmin == true || $isAfler == true)
+                    @if ($isAdmin || $isAfler)
                         <td class="excludeThisClassForAflee"> {{ number_format($schedule->fee_per_session) }} </td>
                     @endif
-                    @if ($isAdmin == true || $isAflee == true)
+                    @if ($isAdmin || $isAflee)
                         <td class="excludeThisClassForAfler"> {{ number_format($schedule->cost_per_session) }} </td>
                     @endif
                         <td> {{ $schedule->sum_session }} </td>
-                    @if ($isAdmin == true || $isAfler == true)
+                    @if ($isAdmin || $isAfler)
                         <td class="excludeThisClassForAflee"> {{ number_format($schedule->fee_per_session*$schedule->sum_session) }} </td> 
                     @endif
-                    @if ($isAdmin == true || $isAflee == true)
+                    @if ($isAdmin || $isAflee)
                         <td class="excludeThisClassForAfler"> {{ number_format($schedule->cost_per_session*$schedule->sum_session) }} </td>
                     @endif
                         <td>{{ isset($schedule->location()->cost) ? number_format($schedule->location()->cost) : '' }}</td>
-                    @if ($isAdmin == true || $isAfler == true)
+                    @if ($isAdmin || $isAfler)
                         <td class="excludeThisClassForAflee"> {{ number_format($schedule->total_fee) }} </td> 
                     @endif
-                    @if ($isAdmin == true || $isAflee == true)
+                    @if ($isAdmin || $isAflee)
                         <td class="excludeThisClassForAfler"> {{ number_format($schedule->total_cost) }} </td>
                     @endif
-                    @if ($isAdmin == true )    
+                    @if ($isAdmin )    
                         <td class="excludeThisClassForAflee excludeThisClassForAfler"> {{ number_format($schedule->profit) }} </td>
                     @endif
-                    @if ($isAdmin == true || $isAfler == true)                            
+                    @if ($isAdmin || $isAfler)                            
                         <td class="excludeThisClassForAflee excludeThisClassForAfler">edit</td>
                         <form action="{{url('/Schedule/Delete')}}" method="post">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -204,7 +204,7 @@
                         </form>
                     @endif
                         
-                        {{-- @if ($isAfler == true && $isAdmin == false)
+                        {{-- @if ($isAfler && $isAdmin == false)
                             @if ($schedule->fee_status == 'payed_by_AFL')
                                 <td class="excludeThisClassForAfler" style="background-color:green">Fee sudah ditransfer</td>
                             @else
