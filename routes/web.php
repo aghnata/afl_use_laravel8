@@ -20,14 +20,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/Schedule/download_pdf/{fileName}', [ScheduleController::class, 'downloadPDF']);
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/Schedule/All', [ScheduleController::class, 'all']);
     Route::post('/Schedule/SortingSchedule', [ScheduleController::class, 'sortingSchedule']);
     Route::post('/Schedule/ChangePaymentStatus', [ScheduleController::class, 'changePaymentStatus']);
     Route::post('/Schedule/Store', [ScheduleController::class, 'store']);
     Route::post('/Schedule/Delete', [ScheduleController::class, 'delete']);
-    
-    Route::get('/Schedule/download_pdf/{fileName}', [ScheduleController::class, 'downloadPDF']);
     
     //update transport fee
     Route::get('/Update/TransportFee', [UpdateController::class, 'updateTransportFee']);

@@ -74,7 +74,7 @@
 
       <tr>
         <td colspan="11" style="text-align:center; background-color:aqua; font-weight: bold;"> TOTAL Seluruh Cost </td>
-        <td style="text-align:center; background-color:gold; font-weight: bold;"> {{ number_format($totalCost) }} </td>
+        <td style="background-color:gold; font-weight: bold;"> {{ number_format($totalCost) }} </td>
       </tr>
     </table>
     

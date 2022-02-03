@@ -91,13 +91,13 @@
             </div>
         @endif
 
-        @if ($isAdmin == true)    
+        @if ($isAdmin)    
             <button style="float:right;" class="btn btn-warning" onclick="ExportExcel()">Download Excel</button>
         @endif
-        @if ($isAflee == true)    
+        @if ($isAflee)    
             <button style="float:right;" class="btn btn-danger" onclick="ExportExcelAflee()">Download Excel for Aflee</button>
         @endif
-        @if ($isAfler == true)    
+        @if ($isAfler)    
             <button style="float:right;" class="btn btn-primary" onclick="ExportExcelAfler()">Download Excel for Afler</button>
         @endif
 
@@ -148,16 +148,21 @@
                 <tr>
                     <td> {{ $no++ }} </td>
                     @if ($isAdmin == true)
-                        @if ($schedule->fee_status == 'payed_by_AFL' && $schedule->cost_status == null)
+                        @if ($schedule->fee_status == 'payed_by_AFL' && $schedule->cost_status != 'transfered_by_Aflee')
                             <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:green">Fee sudah ditransfer</td>
-                        @endif
-                        @if ($schedule->cost_status == 'transfered_by_Aflee' && $schedule->fee_status == null)
+                        @elseif ($schedule->cost_status == 'transfered_by_Aflee' && $schedule->fee_status != 'payed_by_AFL')
                             <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:mediumturquoise">Cost sudah lunas</td>
-                        @endif
-                        @if ($schedule->fee_status == 'payed_by_AFL' && $schedule->cost_status == 'transfered_by_Aflee')
+                        @elseif ($schedule->fee_status == 'payed_by_AFL' && $schedule->cost_status == 'transfered_by_Aflee')
                             <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:brown">Fee transfered & Cost lunas</td>
-                        @endif
-                        @if ($schedule->fee_status == null && $schedule->cost_status == null)
+                        @elseif ($schedule->fee_status == null && $schedule->cost_status == null)
+                            <td class="excludeThisClassForAflee excludeThisClassForAfler"></td>
+                        @elseif ($schedule->fee_status && !$schedule->cost_status)
+                            <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:palegreen">{{$$schedule->fee_status}}</td>
+                        @elseif (!$schedule->fee_status && $schedule->cost_status)
+                            <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:yellow">{{$schedule->cost_status}}</td>
+                        @elseif ($schedule->fee_status == 'confirmed' && $schedule->cost_status == 'billed')
+                            <td class="excludeThisClassForAflee excludeThisClassForAfler" style="background-color:red">Fee sudah ditransfer</td>
+                        @else
                             <td class="excludeThisClassForAflee excludeThisClassForAfler"></td>
                         @endif
                     @endif

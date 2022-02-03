@@ -118,26 +118,45 @@ class ScheduleController extends Controller
             } elseif ($afleeIdSort != null && $startDate != null && $endDate != null && $aflerIdSort == null) {
                 $schedules = Schedule::where('aflee_id', $afleeIdSort)->orderBy('date', 'asc')->whereBetween('date', [$startDate, $endDate])->get();
 
-                // dd($request->all());
+                // Kirim tagihan ke siswa
                 if ($request->payment_status == "send_invoice") {
-                   
-                    $finalStartDate = Carbon::parse($startDate)->format('d F Y');
-                    $finalEndDate = Carbon::parse($endDate)->format('d F Y');
-                    $totalCost = $schedules->sum('total_cost');
-                    // $imgscr = url('/') . "/dist/img/large_logo.png";
-                    $pdf = PDF::loadview('pdf.invoice', 
-                    compact('schedules', 'sortedAfleeName', 'finalStartDate', 'finalEndDate', 'totalCost'))->setPaper('a4', 'landscape');
-                    
-                    $fileName = $startDate."to".$endDate."_".$sortedAfleeName.".pdf";
-                    
-                    try {
-                        Storage::put('public/invoices/'.$fileName, $pdf->output());
-                    } catch (\Throwable $th) {
-                        dd("file sudah ada");
-                    }
 
-                    dd("cek");
-                    
+                    $dataAflee = Aflee::find($afleeIdSort);
+                    $salam = $dataAflee->is_islam ? "Assalamu'alaikum Ibu/Bapak," : "Punten Ibu/Bapak,";
+                    $parentWANo = $dataAflee->parent_wa_number;
+
+                    if ($parentWANo) {
+                        $finalStartDate = Carbon::parse($startDate)->format('d F Y');
+                        $finalEndDate = Carbon::parse($endDate)->format('d F Y');
+                        $totalCost = $schedules->sum('total_cost');
+                        
+                        $pdf = PDF::loadview('pdf.invoice', 
+                        compact('schedules', 'sortedAfleeName', 'finalStartDate', 'finalEndDate', 'totalCost'))->setPaper('a4', 'landscape');
+                        
+                        $stdName = str_replace(" ", "", $sortedAfleeName);
+                        $fileName = $startDate."to".$endDate."_".$stdName."_".$afleeIdSort.".pdf";
+                        
+                        try {
+                            Storage::put('public/invoices/'.$fileName, $pdf->output());
+
+                            foreach ($schedules as $sc) {
+                                if ($sc->cost_status != 'transfered_by_Aflee') {
+                                    $sc->cost_status = "billed";
+                                    $sc->save();
+                                } else {
+                                    dd("cost sudah dibayar Aflee");
+                                }
+                            }
+                        } catch (\Throwable $th) {
+                            // file sudah ada jadi lngsung kirim invoice ke wa ortu
+                            return view('send_invoice.index', 
+                            compact('fileName', 'salam', 'sortedAfleeName', 'finalStartDate', 'finalEndDate', 'totalCost', 'parentWANo'));
+                        }
+                        return view('send_invoice.index', 
+                        compact('fileName', 'salam', 'sortedAfleeName', 'finalStartDate', 'finalEndDate', 'totalCost', 'parentWANo'));    
+                    } else {
+                        dd('No Wa belum ada di db');
+                    }
                 }
             
             // pengurutan berdasarkan afler dan filter tanggal
