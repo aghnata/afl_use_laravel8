@@ -278,7 +278,7 @@
                                 <input list="locations" id="location" onchange="setLocationId()" required>
                                 <datalist id="locations">
                                     @foreach ($locations as $location)
-                                        <option data-id_location="{{$location->id}}"> {{ $location->place_name }} </option>
+                                        <option data-id_location="{{$location->id}}"> {{$location->place_name}} - {{number_format($location->cost)}} </option>
                                     @endforeach
                                 </datalist>
                                 <input type="hidden" name="location_id" value="" class="location" required/>

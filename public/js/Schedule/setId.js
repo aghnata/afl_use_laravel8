@@ -123,17 +123,26 @@ function changePaymentValueAflee() {
 
 // for send invoice to aflee
 function sendInvoiceAflee() {
-    $("#payment_status_aflee").val("send_invoice");
-    var cekStartDate = $("#start_date").val();
-    var cekEndDate = $("#end_date").val();
-    if (cekStartDate && cekEndDate) {
-        if (cekStartDate > cekEndDate) {
-            alert("Tanggal awal tidak boleh lebih besar dari tanggal akhir");
+    $(function () {
+        var r = confirm("Apakah Anda yakin akan MENAGIH siswa ini?");
+        if (r == true) {
+            $("#payment_status_aflee").val("send_invoice");
+            var cekStartDate = $("#start_date").val();
+            var cekEndDate = $("#end_date").val();
+            if (cekStartDate && cekEndDate) {
+                if (cekStartDate > cekEndDate) {
+                    alert("Tanggal awal tidak boleh lebih besar dari tanggal akhir");
+                } else {
+                    $("#submit-filter-aflee").click();
+                }
+            } else {
+                alert("Tanggal awal dan tanggal akhir harus diisi");
+            }
+
         } else {
-            $("#submit-filter-aflee").click();
+            $("#payment_status_aflee").val(false);
         }
-    } else {
-        alert("Tanggal awal dan tanggal akhir harus diisi");
-    }
+    })
+
 }
     

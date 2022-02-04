@@ -3,7 +3,7 @@
     <input hidden type="text" name="phone" value="{{$parentWANo}}">
     <textarea hidden name="text" id="" cols="30" rows="10">
 {{$salam}} 
-total biaya pendidikan {{$sortedAfleeName}} di AFL pada *{{$finalStartDate}} hingga {{$finalEndDate}}* adalah *Rp {{number_format($totalCost)}}* .
+total biaya pendidikan {{$sortedAfleeName}} di Afledu pada *{{$finalStartDate}} hingga {{$finalEndDate}}* adalah *Rp {{number_format($totalCost)}}* .
 
 Biaya tsb bisa ditransfer ke 
 No rekening  BSI 6680876860 a.n. Aghnat Atqiya
