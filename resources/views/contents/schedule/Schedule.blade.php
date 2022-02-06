@@ -54,8 +54,8 @@
     {{-- Sorting by date for afler and aflee --}}
     <form autocomplete="off" action="{{url('/Schedule/SortingSchedule')}}" method="POST">
         {{ csrf_field() }}
-        tgl awal<input type="date" name="start_date" required> &nbsp; &nbsp;
-        tgl akhir<input type="date" name="end_date" required>
+        tgl awal<input type="date" name="start_date" value="{{$startDate}}" required> &nbsp; &nbsp;
+        tgl akhir<input type="date" name="end_date" value="{{$endDate}}" required>
         <button> search </button>
     </form>
     <br>
