@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function updateAflee(Request $request){
         
-        if (auth()->user()->role_id == 1) {
+        if (auth()->user()->role_id == 1 || auth()->user()->role_id == 2) {
             $aflee = Aflee::find($request->aflee_id);
             $aflee->parent_wa_number = $request->parent_wa_number;
             $aflee->save();
