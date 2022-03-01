@@ -67,3 +67,30 @@
     </ul>
   </li>
 </ul>
+
+
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+  <li class="nav-item has-treeview">
+    <a href="#" class="nav-link bg-success active">
+      <i class="nav-icon fa fa-users"></i>
+      <p>
+        User Management
+        <i class="right fa fa-angle-left"></i>
+      </p>
+    </a>
+    <ul class="nav nav-treeview" style="display: none;">
+      <li class="nav-item">
+        <a href="{{url('/list-aflee')}}" class="nav-link">
+          <i class="fa fa-circle-o nav-icon"></i>
+          <p>Setting AFLees</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="./index2.html" class="nav-link">
+          <i class="fa fa-circle-o nav-icon"></i>
+          <p>Setting AFLer</p>
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>

@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('layouts.main')
 
 @section('content')
     <a href="{{url('/listaflee')}}">Cek Siswa (Aflee) yg sudah daftar</a>

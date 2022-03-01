@@ -27,6 +27,8 @@
   <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker-bs3.css')}}">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
+  @yield('style')
+  
 </head>
   <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -89,27 +91,33 @@
 
   <!-- jQuery -->
   <script src='{{ url('plugins/jquery/jquery.min.js')}}'></script>
+  <!-- Bootstrap 4 -->
+  <script src='{{ url('plugins/bootstrap/js/bootstrap.bundle.min.js')}}'></script>
+  <!-- AdminLTE App -->
+  <script src='{{ url('dist/js/adminlte.js')}}'></script>
+  <!-- AdminLTE App -->
+  <script src='{{ url('dist/js/demo.js')}}'></script>
+
   <!-- Sweet Alert -->
   <script src='{{ url('plugins/sweetalert/cdnsweetalert.js')}}'></script>
   <script>
-        @if(session('success'))
-					swal("{{session('success')}}", "", "success");
-        @endif
+    @if(session('success'))
+      swal("{{session('success')}}", "", "success");
+    @endif
 
-				@if(session('info'))
-					swal("{{session('info')}}", "", "info");
-				@endif
+    @if(session('info'))
+      swal("{{session('info')}}", "", "info");
+    @endif
 
-				@if(session('error'))
-					swal("{{session('error')}}", "", "error");
-        @endif
+    @if(session('error'))
+      swal("{{session('error')}}", "", "error");
+    @endif
 
-        @if(session('warning'))
-					swal("{{session('warning')}}", "", "warning");
-        @endif
-	</script>
-  <!-- AdminLTE App -->
-  <script src='{{ url('dist/js/adminlte.js')}}'></script>
+    @if(session('warning'))
+      swal("{{session('warning')}}", "", "warning");
+    @endif
+  </script>
+  
   @stack('script')
   </body>
 </html>

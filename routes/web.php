@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UpdateController;
+use App\Http\Controllers\TransportFeeController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -31,6 +33,16 @@ Route::group(['middleware' => 'auth'], function () {
     
     //update transport fee
     Route::get('/Update/TransportFee', [UpdateController::class, 'updateTransportFee']);
+
+    //List Transport Fee
+    Route::get('/transport-fee', [TransportFeeController::class, 'index']);
+    
+    //List Aflee
+    Route::get('/list-aflee', [UserController::class, 'listAflee']);
+    Route::put('/update-aflee',[UserController::class, 'updateAflee']);
+
+    
+
 });
 
 // Route::get('/dashboard', function () {
