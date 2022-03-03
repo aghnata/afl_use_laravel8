@@ -16,12 +16,13 @@
             </datalist>
             <input type="hidden" name="afler_id" value="{{$aflerIdSort}}" class="filterpengajar"/>
             <br>
-            tgl awal<input type="date" name="start_date" value="{{$startDate}}">
-            tgl akhir<input type="date" name="end_date" value="{{$endDate}}">
+            tgl awal<input id="date_start" type="date" name="start_date" value="{{$startDate}}">
+            tgl akhir<input id="date_end" type="date" name="end_date" value="{{$endDate}}">
             <br>
             <input id="payment_status_afler" type="hidden" name="payment_status" value="">
             <button type="button" style="margin-right: 210px;" onclick="changePaymentValueFalseAfler()"> search </button>
             <button type="button" class="btn btn-info" onclick="changePaymentValueAfler()"> Fee sudah AFL Bayar </button>
+            <button type="button" class="btn btn-warning ml-5" onclick="sendConfirmationAfler()"> Kirim Konfirmasi Afler </button>
             <button type="submit" id="submit-filter-afler" hidden ></button>
         </form>
         <br>

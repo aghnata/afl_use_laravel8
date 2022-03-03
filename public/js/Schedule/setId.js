@@ -138,11 +138,32 @@ function sendInvoiceAflee() {
             } else {
                 alert("Tanggal awal dan tanggal akhir harus diisi");
             }
-
         } else {
             $("#payment_status_aflee").val(false);
         }
     })
-
 }
-    
+
+
+// for send confirmation to afler
+function sendConfirmationAfler() {
+    $(function () {
+        var r = confirm("Apakah Anda yakin akan mengkonfirmasi pengajar ini?");
+        if (r == true) {
+            $("#payment_status_afler").val("send_confirmation");
+            var cekStartDate = $("#date_start").val();
+            var cekEndDate = $("#date_end").val();
+            if (cekStartDate && cekEndDate) {
+                if (cekStartDate > cekEndDate) {
+                    alert("Tanggal awal tidak boleh lebih besar dari tanggal akhir");
+                } else {
+                    $("#submit-filter-afler").click();
+                }
+            } else {
+                alert("Tanggal awal dan tanggal akhir harus diisi");
+            }
+        } else {
+            $("#payment_status_afler").val(false);
+        }
+    })
+}

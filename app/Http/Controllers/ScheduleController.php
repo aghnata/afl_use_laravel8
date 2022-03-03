@@ -118,7 +118,7 @@ class ScheduleController extends Controller
             } elseif ($afleeIdSort != null && $startDate != null && $endDate != null && $aflerIdSort == null) {
                 $schedules = Schedule::where('aflee_id', $afleeIdSort)->orderBy('date', 'asc')->whereBetween('date', [$startDate, $endDate])->get();
 
-                // Kirim tagihan ke siswa
+                //------------------------------ Kirim Tagihan ke Siswa ---------------------------------------------------------------
                 if ($request->payment_status == "send_invoice") {
 
                     $dataAflee = Aflee::find($afleeIdSort);
@@ -134,7 +134,7 @@ class ScheduleController extends Controller
                         compact('schedules', 'sortedAfleeName', 'finalStartDate', 'finalEndDate', 'totalCost'))->setPaper('a4', 'landscape');
                         
                         $stdName = str_replace(" ", "", $sortedAfleeName);
-                        $fileName = $startDate."to".$endDate."_".$stdName."_".$afleeIdSort.".pdf";
+                        $fileName = "invoice_".$startDate."to".$endDate."_".$stdName."_".$afleeIdSort.".pdf";
                         
                         try {
                             Storage::put('public/invoices/'.$fileName, $pdf->output());
@@ -149,19 +149,62 @@ class ScheduleController extends Controller
                             }
                         } catch (\Throwable $th) {
                             // file sudah ada jadi lngsung kirim invoice ke wa ortu
-                            return view('send_invoice.index', 
+                            return view('send_to_wa.send_invoice', 
                             compact('fileName', 'salam', 'sortedAfleeName', 'finalStartDate', 'finalEndDate', 'totalCost', 'parentWANo'));
                         }
-                        return view('send_invoice.index', 
+                        return view('send_to_wa.send_invoice', 
                         compact('fileName', 'salam', 'sortedAfleeName', 'finalStartDate', 'finalEndDate', 'totalCost', 'parentWANo'));    
                     } else {
                         dd('No Wa belum ada di db');
                     }
                 }
+                //------------------------------ END Kirim Tagihan ke Siswa -----------------------------------------------------------
             
             // pengurutan berdasarkan afler dan filter tanggal
             }elseif ($aflerIdSort != null && $startDate != null && $endDate != null && $afleeIdSort == null) {
                 $schedules = Schedule::where('afler_id', $aflerIdSort)->orderBy('date', 'asc')->whereBetween('date', [$startDate, $endDate])->get();
+            
+                //------------------------------ Kirim Konfirmasi ke Pengajar ---------------------------------------------------------------
+                if ($request->payment_status == "send_confirmation") {
+
+                    $dataAfler = User::where('afler_id', $aflerIdSort)->first();
+                    // $salam = $dataAfler->is_islam ? "Assalamu'alaikum Ibu/Bapak," : "Punten Ibu/Bapak,";
+                    $wANo = $dataAfler->phone_number;
+
+                    if ($wANo) {
+                        $finalStartDate = Carbon::parse($startDate)->format('d F Y');
+                        $finalEndDate = Carbon::parse($endDate)->format('d F Y');
+                        $totalFee = $schedules->sum('total_fee');
+                        
+                        $pdf = PDF::loadview('pdf.confirmation', 
+                        compact('schedules', 'sortedAflerName', 'finalStartDate', 'finalEndDate', 'totalFee'))->setPaper('a4', 'landscape');
+                        
+                        $teachName = str_replace(" ", "", $sortedAflerName);
+                        $fileName = "confirmation_".$startDate."to".$endDate."_".$teachName."_".$aflerIdSort.".pdf";
+                        
+                        try {
+                            Storage::put('public/confirmations/'.$fileName, $pdf->output());
+
+                            // foreach ($schedules as $sc) {
+                            //     if ($sc->cost_status != 'transfered_by_Aflee') {
+                            //         $sc->cost_status = "billed";
+                            //         $sc->save();
+                            //     } else {
+                            //         dd("cost sudah dibayar Aflee");
+                            //     }
+                            // }
+                        } catch (\Throwable $th) {
+                            // file sudah ada jadi lngsung kirim invoice ke wa ortu
+                            return view('send_to_wa.send_confirmation', 
+                            compact('fileName', 'sortedAflerName', 'finalStartDate', 'finalEndDate', 'totalFee', 'wANo'));
+                        }
+                        return view('send_to_wa.send_confirmation', 
+                        compact('fileName', 'sortedAflerName', 'finalStartDate', 'finalEndDate', 'totalFee', 'wANo'));    
+                    } else {
+                        dd('No Wa belum ada di db');
+                    }
+                }
+                //------------------------------ END Kirim Konfirmasi ke Pengajar -----------------------------------------------------------
             
             // pengurutan berdasarkan filter tanggal saja
             } elseif ($afleeIdSort == null && $startDate != null && $endDate != null && $aflerIdSort == null) {
@@ -332,9 +375,11 @@ class ScheduleController extends Controller
     }
 
     public function downloadPDF($fileName){
-        
+
+        $forlderName = explode("_", $fileName, 2)[0] . 's/';
+
         try {
-            $file = Storage::disk('public')->get('invoices/'.$fileName);
+            $file = Storage::disk('public')->get($forlderName . $fileName);
             
             return (new Response($file, 200))
               ->header('Content-Type', 'application/pdf');
