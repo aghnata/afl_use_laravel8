@@ -172,6 +172,7 @@ class ScheduleController extends Controller
                     $wANo = $dataAfler->phone_number;
 
                     if ($wANo) {
+                        $wANo = '628' . explode("8", $wANo, 2)[1]; 
                         $finalStartDate = Carbon::parse($startDate)->format('d F Y');
                         $finalEndDate = Carbon::parse($endDate)->format('d F Y');
                         $totalFee = $schedules->sum('total_fee');
