@@ -14,7 +14,7 @@
                     <option data-id_pengajar="{{$afler->id}}"> {{ $afler->afler_name }} </option>
                 @endforeach
             </datalist>
-            <input type="hidden" name="afler_id" value="{{$aflerIdSort}}" class="filterpengajar"/>
+            <input type="hidden" name="afler_id" value="{{$aflerIdSort}}" class="filterpengajar"/> <span>Total Fee: Rp<b> {{ number_format($totalFee)}}</b></span>
             <br>
             tgl awal<input id="date_start" type="date" name="start_date" value="{{$startDate}}">
             tgl akhir<input id="date_end" type="date" name="end_date" value="{{$endDate}}">
@@ -36,7 +36,7 @@
                     <option data-id_siswa="{{$aflee->id}}"> {{ $aflee->aflee_name }} </option>
                 @endforeach
             </datalist>
-            <input type="hidden" name="aflee_id" value="{{$afleeIdSort}}" class="filtersiswa"/>
+            <input type="hidden" name="aflee_id" value="{{$afleeIdSort}}" class="filtersiswa"/> <span>Total Cost: Rp<b> {{ number_format($totalCost)}}</b></span>
             <br>
             tgl awal<input id="start_date" type="date" name="start_date" value="{{$startDate}}">
             tgl akhir<input id="end_date" type="date" name="end_date" value="{{$endDate}}">
