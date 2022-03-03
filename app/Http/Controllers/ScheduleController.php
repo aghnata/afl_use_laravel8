@@ -377,8 +377,8 @@ class ScheduleController extends Controller
     public function downloadPDF($fileName){
 
         $forlderName = explode("_", $fileName, 2)[0] . 's/';
-
-        if ($forlderName != 'confirmation' && $forlderName != 'invoice') {
+        
+        if ($forlderName != 'confirmations/' && $forlderName != 'invoices/') {
             $forlderName = 'invoices/';
         }
 
