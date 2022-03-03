@@ -378,7 +378,12 @@ class ScheduleController extends Controller
 
         $forlderName = explode("_", $fileName, 2)[0] . 's/';
 
+        if ($forlderName != 'confirmation' && $forlderName != 'invoice') {
+            $forlderName = 'invoices/';
+        }
+
         try {
+            // $file = Storage::disk('public')->get('invoices/'.$fileName);
             $file = Storage::disk('public')->get($forlderName . $fileName);
             
             return (new Response($file, 200))
