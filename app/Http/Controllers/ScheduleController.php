@@ -325,7 +325,17 @@ class ScheduleController extends Controller
 
     //Store Schedule
     public function store(Request $request){
-        
+        $dateStart = new Carbon('first day of this month');
+        $dateEnd = Carbon::now()->endOfMonth();
+        // dd($dateStart->toDateString(), $dateEnd->toDateString());
+
+        if (auth()->user()->role_id == 4) {
+            if ($request->date < $dateStart || $request->date > $dateEnd) {
+                return redirect()->back()->with('error_msg', "Data tanggal yang kamu input bukan di bulan ini.");
+            }
+        }
+
+
         $session_fee = Grade::find($request->grade_id)->primary_fee;
         $session_cost = Grade::find($request->grade_id)->primary_cost;
         $ongkos = TransportFee::find($request->location_id)->cost;

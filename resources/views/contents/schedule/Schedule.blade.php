@@ -353,6 +353,15 @@
     @if ($isAfler == true && $isAdmin == false)
         <input id="InvoiceAflerName" type="hidden" value="{{auth()->user()->name}}">
     @endif
+
+    @if (session('error_msg'))
+        <input type="hidden" value="{{session('error_msg')}}" id="msg">
+        <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script> 
+        <script>
+        var msg = document.getElementById("msg").value;
+        Swal.fire(msg,'Periksa kembali tanggal yang kamu pilih!','error')
+        </script> 
+    @endif
 @endsection
 
 @push('script')
