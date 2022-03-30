@@ -213,7 +213,7 @@
 
 <script>
     $('.id_shop').click(function(e){
-    console.log(e.target.value)
+    // console.log(e.target.value)
       $('#aflee_id').val(e.target.value);
       $('#aflee_name').attr('value', e.target.getAttribute("aflee_name") );
       $('#parent_wa_number').attr('value', e.target.getAttribute("parent_wa_number") );
