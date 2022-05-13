@@ -75,7 +75,16 @@
                     <li>TPB: 115.000/sesi</li>
                 </ol>
                 <p>Untuk reguler, jika les bareng teman maka + 10.000*jumlah teman.</p>
-                <p>1 sesi = 90 menit, jika lebih terhitung 2 sesi kecuali pengajar berkenan tetap dihitung 1 sesi.</p>
+                <p>1 sesi: <= 90 menit <br>
+                    1.5 sesi: 91-135 menit <br>
+                    2 sesi: 136-180 menit <br>
+                    2.5 sesi: 181-225 menit <br>
+                    3 sesi: 226-270 menit <br>
+                    3.5 sesi: 271-315 menit <br>
+                    4 sesi: 316-360 menit <br>
+                    4.5 sesi: 361-405 menit <br>
+                    5 sesi: 406-450 menit <br>
+                    dst.</p>
             </div>
         @endif
         @if ($isAflee || $isAdmin)
@@ -88,7 +97,16 @@
                     <li>TPB: 130.000/sesi</li>
                 </ol>
                 <p>Untuk reguler, jika les bareng teman maka + 20.000*jumlah teman.</p>
-                <p>1 sesi = 90 menit, jika lebih terhitung 2 sesi kecuali pengajar berkenan tetap dihitung 1 sesi.</p>
+                <p>1 sesi: <= 90 menit <br>
+                    1.5 sesi: 91-135 menit <br>
+                    2 sesi: 136-180 menit <br>
+                    2.5 sesi: 181-225 menit <br>
+                    3 sesi: 226-270 menit <br>
+                    3.5 sesi: 271-315 menit <br>
+                    4 sesi: 316-360 menit <br>
+                    4.5 sesi: 361-405 menit <br>
+                    5 sesi: 406-450 menit <br>
+                    dst.</p>
             </div>
         @endif
 
