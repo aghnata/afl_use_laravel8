@@ -74,7 +74,7 @@
                     <li>SMA Reguler: 85.000/sesi || SMA to PTN: 100.000/sesi || SMA Olim: 115.000/sesi</li>
                     <li>TPB: 115.000/sesi</li>
                 </ol>
-                <p>Untuk reguler, jika les bareng teman maka + 10.000*jumlah teman.</p>
+                <p>Jika les bareng teman maka + 10.000*jumlah teman.</p>
                 <p>1 sesi: <= 90 menit <br>
                     1.5 sesi: 91-135 menit <br>
                     2 sesi: 136-180 menit <br>
@@ -96,7 +96,7 @@
                     <li>SMA Reguler: 100.000/sesi || SMA to PTN: 115.000/sesi || SMA Olim: 130.000/sesi</li>
                     <li>TPB: 130.000/sesi</li>
                 </ol>
-                <p>Untuk reguler, jika les bareng teman maka + 20.000*jumlah teman.</p>
+                <p>Jika les bareng teman maka + 20.000*jumlah teman.</p>
                 <p>1 sesi: <= 90 menit <br>
                     1.5 sesi: 91-135 menit <br>
                     2 sesi: 136-180 menit <br>
