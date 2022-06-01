@@ -332,11 +332,12 @@ class ScheduleController extends Controller
 
         // dd($dateStart->toDateString(), $dateEnd->toDateString());  ->toDateString() untuk data tgl nya aja, tanpa hour
 
-        if (auth()->user()->role_id == 4) {
-            if ($request->date < $dateStart || $request->date > $dateEnd) {
-                return redirect()->back()->with('error_msg', "Data tanggal yang kamu input bukan di bulan ini.");
-            }
-        }
+        //VALIDATION CANNOT INPUT WHEN NOT IN THIS MONTH
+        // if (auth()->user()->role_id == 4) {
+        //     if ($request->date < $dateStart || $request->date > $dateEnd) {
+        //         return redirect()->back()->with('error_msg', "Data tanggal yang kamu input bukan di bulan ini.");
+        //     }
+        // }
 
         $session_fee = Grade::find($request->grade_id)->primary_fee;
         $session_cost = Grade::find($request->grade_id)->primary_cost;
